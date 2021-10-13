@@ -1,5 +1,5 @@
 import pandas as pd
-
+import numpy as np
 """Open All DataFiles and put them into all_data DataFrame"""
 tour_data = pd.read_csv('data/tour-data.csv')
 vuelta_data = pd.read_csv('data/vuelta-data.csv')
@@ -22,6 +22,14 @@ all_data['avg_speed_of_winner'] = pd.to_numeric(extr)
 
 extr = all_data['distance'].str.extract('^  ([\d]+.[\d]*)', expand=False)
 all_data['distance'] = pd.to_numeric(extr)
+
+
+
+extr = all_data['vertical_meters']
+extr = extr.apply(lambda s : s.strip())
+extr = extr.replace('',np.nan)
+extr = extr.apply(lambda s : float(s))
+all_data['vertical_meters'] = extr
 
 all_data.to_csv('data/all_data.csv')
 

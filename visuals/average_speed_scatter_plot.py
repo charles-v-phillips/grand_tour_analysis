@@ -12,7 +12,7 @@ avg_speed_giro = all_data[(all_data['race'] == 'giro-d-italia') & (all_data['edi
 avg_speed_tour = all_data[(all_data['race'] == 'tour-de-france')].groupby('edition').mean()[['avg_speed_of_winner']]
 avg_speed_vuelta = all_data[(all_data['race'] == 'vuelta-a-espana')].groupby('edition').mean()[['avg_speed_of_winner']]
 
-print(type(avg_speed_giro))
+
 
 ax = plt.axes()
 ax.set_aspect(2)
@@ -20,6 +20,8 @@ ax.set_ylabel('Average Speed (kph)')
 ax.set_xlabel('Year')
 ax.spines['top'].set_alpha(0)
 ax.spines['right'].set_alpha(0)
+plt.grid(b=True, which='major', color='#666666', linestyle='-',alpha = .4)
+ax.set_axisbelow(True)
 
 plt.scatter(avg_speed_giro.index, avg_speed_giro.avg_speed_of_winner,color = '#fb9bbd',s = 8,label = 'giro')
 plt.scatter(avg_speed_tour.index,avg_speed_tour.avg_speed_of_winner,color = '#f9db00',s = 8, label = 'tour')
@@ -27,6 +29,7 @@ plt.scatter(avg_speed_vuelta.index,avg_speed_vuelta.avg_speed_of_winner, color =
 
 
 plt.legend(framealpha = 0)
+
 
 plt.savefig('scatter_of_avg_speed.png',transparent = True)
 # plt.show()

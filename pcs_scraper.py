@@ -137,6 +137,6 @@ def scrape_to_csv(race,save_to,starting_edition = 0):
                 writer.writerow(line)
 
 
-# scrape_to_csv('vuelta-a-espana','vuelta-data2.csv')
+# scrape_to_csv('vuelta-a-espana','testing.csv')
 if __name__ == '__main__':
     pass
