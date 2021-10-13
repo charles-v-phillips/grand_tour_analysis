@@ -1,0 +1,30 @@
+import pandas as pd
+
+"""Open All DataFiles and put them into all_data DataFrame"""
+tour_data = pd.read_csv('data/tour-data.csv')
+vuelta_data = pd.read_csv('data/vuelta-data.csv')
+giro_data = pd.read_csv('data/giro-data.csv')
+all_data = pd.concat([tour_data, vuelta_data, giro_data])
+
+
+
+"""Cleaning Section"""
+extr = tour_data['avg_speed_of_winner'].str.extract('^ ([\d]+.[\d]*)', expand=False)
+tour_data['avg_speed_of_winner'] = pd.to_numeric(extr)
+tour_data['avg_speed_of_winner'] = pd.to_numeric(extr)
+
+extr = tour_data['distance'].str.extract('^  ([\d]+.[\d]*)', expand=False)
+tour_data['distance'] = pd.to_numeric(extr)
+
+extr = all_data['avg_speed_of_winner'].str.extract('^ ([\d]+.[\d]*)', expand=False)
+all_data['avg_speed_of_winner'] = pd.to_numeric(extr)
+all_data['avg_speed_of_winner'] = pd.to_numeric(extr)
+
+extr = all_data['distance'].str.extract('^  ([\d]+.[\d]*)', expand=False)
+all_data['distance'] = pd.to_numeric(extr)
+
+all_data.to_csv('data/all_data.csv')
+
+
+if __name__ == '__main__':
+    pass
