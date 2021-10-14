@@ -9,17 +9,23 @@ all_data = pd.concat([tour_data, vuelta_data, giro_data])
 
 
 """Cleaning Section"""
+
+#Strip 'kph' from avg_speed and cast to float
 extr = tour_data['avg_speed_of_winner'].str.extract('^ ([\d]+.[\d]*)', expand=False)
 tour_data['avg_speed_of_winner'] = pd.to_numeric(extr)
 tour_data['avg_speed_of_winner'] = pd.to_numeric(extr)
 
+#Strip 'k' from distance and cast to float
 extr = tour_data['distance'].str.extract('^  ([\d]+.[\d]*)', expand=False)
 tour_data['distance'] = pd.to_numeric(extr)
 
+#Strip 'k' from distance and cast to float
 extr = all_data['avg_speed_of_winner'].str.extract('^ ([\d]+.[\d]*)', expand=False)
 all_data['avg_speed_of_winner'] = pd.to_numeric(extr)
 all_data['avg_speed_of_winner'] = pd.to_numeric(extr)
 
+
+#Strip
 extr = all_data['distance'].str.extract('^  ([\d]+.[\d]*)', expand=False)
 all_data['distance'] = pd.to_numeric(extr)
 

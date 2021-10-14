@@ -61,16 +61,26 @@ def get_info_on_particular_stage(url):
     is_tt = is_time_trial(soup)
     #get winner and their present day age
     winner,winner_birth_date = get_stage_winner_and_age(soup)
+    winners_ages = get_top_3(soup)
     stage_date = blurb[0].replace(',','').split()
 
     date_of_stage = datetime.datetime(int(stage_date[2]),month_dict[stage_date[1]],int(stage_date[0]))
     blurb[0] = date_of_stage
-    #age of winner when the won the stage
+    #age of winner when they won the stage
     winner_age_when_won = None
     if winner and winner_birth_date : winner_age_when_won = round((date_of_stage - winner_birth_date).days/365,2) ## add this to return_dict
+    rv = []
+    for age in winners_ages:
+        if age is None:
+            rv.append(None)
+        else:
+            rv.append(round((date_of_stage - age).days/365,2))
+    print(rv)
+
+
 
     blurb.append(winner)
-    blurb.append(winner_age_when_won)
+    blurb.extend(rv)
     blurb.append(is_tt)
 
 
@@ -91,6 +101,34 @@ def scrape_blurb(soup):
     data = [l[1] for l in [l.split(':', 1) for l in new_lines] ]
     return data
 
+def get_top_3(soup):
+    ages = []
+    winners = soup.find_all('a', attrs={'href': re.compile('rider/.*-.*')})[:3]
+    for tag in winners:
+        winner_name = None
+        if tag:
+            winner_name = tag.text
+
+            rider_page_soup = make_soup('https://www.procyclingstats.com/rider/{}'.format(tag.get('href')))
+            rider_summary = rider_page_soup.find('div', attrs={'class': 'rdr-info-cont'})
+
+            p = re.compile('birth: ([\d]+)(rd|nd|st|th) +(January|February|March|April|May|June|July|August|September|October|November|December) [\d]{4}')
+            birth_date_match = p.search(rider_summary.text)
+
+
+            if birth_date_match:
+                day = int(rider_summary.contents[1])
+                month = rider_summary.contents[3].split()[0]
+                year = int(rider_summary.contents[3].split()[1])
+                ages.append(datetime.datetime(year,month_dict[month],day))
+            else:
+                ages.append(None)
+
+    return ages
+
+
+
+
 
 def get_stage_winner_and_age(soup):
     winner_tag = soup.find('a', attrs = {'href': re.compile('rider/.*-.*')})
@@ -104,7 +142,7 @@ def get_stage_winner_and_age(soup):
 
         p = re.compile('birth: ([\d]+)(rd|nd|st|th) +(January|February|March|April|May|June|July|August|September|October|November|December) [\d]{4}')
         birth_date_match = p.search(rider_summary.text)
-        print(birth_date_match)
+
 
 
 
@@ -124,7 +162,7 @@ def scrape_to_csv(race,save_to,starting_edition = 0):
 
     with open(save_to, 'w') as f:
         writer = csv.writer(f)
-        headers = ['race', 'edition','stage','date','avg_speed_of_winner','race_category','distance','point_scale', 'parcour_type','profile_score', 'vertical_meters', 'departure', 'arrival','race_ranking', 'won_how','winner','winner_age_when_won','is_tt']
+        headers = ['race', 'edition','stage','date','avg_speed_of_winner','race_category','distance','point_scale', 'parcour_type','profile_score', 'vertical_meters', 'departure', 'arrival','race_ranking', 'won_how','winner','winner_age_when_won','second_age_when_won','third_age_when_won','is_tt']
         writer.writerow(headers)
         for i, tour in enumerate(get_links_to_all_editions(race)[starting_edition:], 1):
             print(f'-------------- EDITION {i} --------------')
@@ -137,6 +175,7 @@ def scrape_to_csv(race,save_to,starting_edition = 0):
                 writer.writerow(line)
 
 
-# scrape_to_csv('vuelta-a-espana','testing.csv')
+
+#scrape_to_csv('giro-d-italia','testing_giro.csv')
 if __name__ == '__main__':
     pass
