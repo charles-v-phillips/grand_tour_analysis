@@ -21,8 +21,9 @@ ax.spines['right'].set_alpha(0)
 plt.scatter(tt_info_giro.index, tt_info_giro.distance, color = '#fb9bbd', s = 8, label = 'giro')
 plt.scatter(tt_info_vuelta.index, tt_info_vuelta.distance,color = 'red', s = 8, label = 'vuelta')
 plt.scatter(tt_info_tour.index, tt_info_tour.distance, color = '#f9db00', s = 8, label = 'tour')
+plt.legend()
 
-plt.savefig('scatter_of_tt_kilometers.png',transparent = True)
+plt.savefig('scatter_of_tt_kilometers.pdf',transparent = True)
 
 if __name__ == '__main__':
     pass
