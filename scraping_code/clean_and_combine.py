@@ -74,7 +74,7 @@ def combine_and_clean(f1,f2,f3,save_to_file):
 #
 # all_data.to_csv('data/all_data.csv')
 
-combine_and_clean('testing_giro.csv','testing_tour.csv','testing_vuelta.csv', 'data/try_again2.csv')
+combine_and_clean('testing_giro.csv','testing_tour.csv','testing_vuelta.csv', '../data/try_again2.csv')
 
 if __name__ == '__main__':
     pass

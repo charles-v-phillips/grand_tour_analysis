@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-all_data = pd.read_csv('/Users/charlesphillips/nycdsa/project_1_pcs/data/try_again2.csv')
+all_data = pd.read_csv('/data/try_again2.csv')
 ages = pd.concat([all_data['winner_age_when_won'],all_data['second_age_when_won'],all_data['third_age_when_won']])
 # .reset_index(drop=True)
 hist = sns.histplot(ages, kde = True, bins = 20)

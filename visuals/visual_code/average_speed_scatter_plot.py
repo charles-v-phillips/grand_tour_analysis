@@ -1,17 +1,13 @@
 import pandas as pd
-import numpy as np
-import seaborn as sns
-import matplotlib.animation as ani
+
 from matplotlib import pyplot as plt
 
-
-all_data = pd.read_csv('/Users/charlesphillips/nycdsa/project_1_pcs/data/all_data.csv')
+all_data = pd.read_csv('/data/all_data.csv')
 
 
 avg_speed_giro = all_data[(all_data['race'] == 'giro-d-italia') & (all_data['edition'] > 1986)].groupby('edition').mean()[['avg_speed_of_winner']]
 avg_speed_tour = all_data[(all_data['race'] == 'tour-de-france')].groupby('edition').mean()[['avg_speed_of_winner']]
 avg_speed_vuelta = all_data[(all_data['race'] == 'vuelta-a-espana')].groupby('edition').mean()[['avg_speed_of_winner']]
-
 
 
 ax = plt.axes()
@@ -31,20 +27,7 @@ plt.scatter(avg_speed_vuelta.index,avg_speed_vuelta.avg_speed_of_winner, color =
 plt.legend(framealpha = 0)
 
 
-plt.savefig('scatter_of_avg_speed.png',transparent = True)
-# plt.show()
-# ax.set_facecolor('white')
-
-
-
-
-
-
-
-
-import seaborn as sns
-sns.set_theme(style="whitegrid")
-
+plt.savefig('scatter_of_avg_speed.pdf',transparent = True)
 
 if __name__ == '__main__':
     pass

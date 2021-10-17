@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-all_data = pd.read_csv('/Users/charlesphillips/nycdsa/project_1_pcs/data/all_data.csv')
+all_data = pd.read_csv('/data/all_data.csv')
 all_data.head()
 
 tt_info_giro = all_data[(all_data['race'] == 'giro-d-italia') & (all_data['is_tt'] == 1)].groupby('edition').sum()[['distance']]

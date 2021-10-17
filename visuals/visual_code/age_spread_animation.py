@@ -11,7 +11,7 @@ from matplotlib.text import Text
 #THIS LINE WORKS IN INTELLIJ BUT NOT COMMAND LINE
 # all_data = pd.read_csv('../data/all_data.csv')
 
-all_data = pd.read_csv('/Users/charlesphillips/nycdsa/project_1_pcs/data/try_again2.csv')
+all_data = pd.read_csv('/data/try_again2.csv')
 a = all_data[['edition','second_age_when_won']].rename({'second_age_when_won' : 'age'},axis = 1)
 b = all_data[['edition','winner_age_when_won']].rename({'winner_age_when_won' : 'age'},axis = 1)
 c = all_data[['edition','third_age_when_won']].rename({'third_age_when_won' : 'age'},axis = 1)
